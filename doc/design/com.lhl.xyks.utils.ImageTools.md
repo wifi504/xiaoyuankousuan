@@ -1,0 +1,3 @@
+class ImageTools 图像处理工具类
+feature1：结合OpenCV，先对截图做预处理再识别
+feature2：尝试使用模板匹配来让自动化变得稳定
