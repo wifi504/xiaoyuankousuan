@@ -4,6 +4,7 @@ import com.lhl.xyks.pk.DoCompareQuestion;
 import com.lhl.xyks.pk.DoMathMultiply;
 import com.lhl.xyks.pk.MouseDraw;
 import com.lhl.xyks.pk.Pause;
+import com.lhl.xyks.utils.Mouse;
 import org.junit.Test;
 
 import java.awt.*;
@@ -29,7 +30,13 @@ public class XYKSTest {
         for (int i = 0; i < 10; i++) {
             String randomDouble = getRandomDouble();
             System.out.println("绘制：" + randomDouble);
-            MouseDraw.drawSymbolsAtPos(2560, 656, randomDouble);
+//            MouseDraw.drawSymbolsAtPos(2560, 656, randomDouble);
+            Mouse mouse = Mouse.getMouse();
+            mouse.setDrawSymbolWidth(50);
+            mouse.setDefaultMoveInterval(0);
+            mouse.setEndDrawDuration(100);
+            mouse.setStartDrawDuration(50);
+            mouse.drawSymbols(randomDouble);
             try {
                 Thread.sleep(3000);
             } catch (InterruptedException e) {

@@ -51,10 +51,11 @@
     - [Screen 屏幕工具类](doc/design/com.lhl.xyks.utils.Screen.md)
     - [OCR 图像识别工具类](doc/design/com.lhl.xyks.utils.OCR.md)
     - [ImageTools 图像处理工具类](doc/design/com.lhl.xyks.utils.ImageTools.md)
+    - ConfigParser 配置文件解析工具类
   - solve
   - ui
   - [Main](doc/design/com.lhl.xyks.Main.md)
-- resources
+- root
   - tessdata OCR 识别模型文件
   - xyks-config.properties 全局配置文件（持久化配置文件）
   - symbol-mapper.json 书写符号映射文件

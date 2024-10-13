@@ -1,0 +1,84 @@
+[
+  {"char": "<", "points": [
+    [81, 56, false],
+    [10, 95, true],
+    [83, 137, true]
+  ]},
+  {"char": ">", "points": [
+    [12, 52, false],
+    [88, 93, true],
+    [13, 124, true]
+  ]},
+  {"char": "1", "points": [
+    [44, 36, false],
+    [46, 156, true]
+  ]},
+  {"char": "2", "points": [
+    [11, 50, false],
+    [66, 78, true],
+    [12, 145, true],
+    [90, 143, true]
+  ]},
+  {"char": "3", "points": [
+    [22, 37, false],
+    [22, 37, true],
+    [74, 54, true],
+    [28, 91, true],
+    [84, 116, true],
+    [11, 151, true]
+  ]},
+  {"char": "4", "points": [
+    [53, 32, false],
+    [10, 109, true],
+    [89, 103, true],
+    [59, 82, true],
+    [55, 178, true]
+  ]},
+  {"char": "5", "points": [
+    [77, 55, false],
+    [23, 62, true],
+    [21, 96, true],
+    [77, 117, true],
+    [14, 155, true]
+  ]},
+  {"char": "6", "points": [
+    [69, 41, false],
+    [29, 57, true],
+    [15, 136, true],
+    [23, 160, true],
+    [61, 155, true],
+    [66, 100, true],
+    [19, 101, true]
+  ]},
+  {"char": "7", "points": [
+    [9, 46, false],
+    [81, 48, true],
+    [54, 158, true]
+  ]},
+  {"char": "8", "points": [
+    [64, 38, false],
+    [25, 77, true],
+    [84, 124, true],
+    [12, 154, true],
+    [71, 52, true]
+  ]},
+  {"char": "9", "points": [
+    [62, 32, false],
+    [22, 69, true],
+    [64, 87, true],
+    [55, 180, true]
+  ]},
+  {"char": "0", "points": [
+    [38, 52, false],
+    [17, 114, true],
+    [28, 151, true],
+    [44, 152, true],
+    [77, 96, true],
+    [73, 68, true],
+    [45, 52, true]
+  ]},
+  {"char": ".", "points": [
+    [37, 154, false],
+    [45, 162, true]
+  ]}
+]
