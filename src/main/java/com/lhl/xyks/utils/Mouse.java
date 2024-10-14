@@ -23,6 +23,10 @@ public class Mouse {
     private static Mouse mouse = null;
     private static Robot robot = null;
 
+    // 鼠标点击状态
+    private static boolean isLeftPress = false;
+    private static boolean isRightPress = false;
+
     // 默认的鼠标进行每单位移动时的时间间隔（ms）
     private long defaultMoveInterval = 1;
 
@@ -182,6 +186,7 @@ public class Mouse {
      */
     public void leftPress() {
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+        isLeftPress = true;
     }
 
     /**
@@ -189,6 +194,7 @@ public class Mouse {
      */
     public void leftRelease() {
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+        isLeftPress = false;
     }
 
     /**
@@ -196,6 +202,7 @@ public class Mouse {
      */
     public void rightPress() {
         robot.mousePress(InputEvent.BUTTON3_DOWN_MASK);
+        isRightPress = true;
     }
 
     /**
@@ -203,6 +210,7 @@ public class Mouse {
      */
     public void rightRelease() {
         robot.mouseRelease(InputEvent.BUTTON3_DOWN_MASK);
+        isRightPress = false;
     }
 
     /**
@@ -300,20 +308,35 @@ public class Mouse {
             Point p = p0.resize(drawSymbolWidth / 100.0);
             // 判断这个点是不是实心路径
             if (p.isSolid) {
-                try {
-                    // 绘制过去
-                    mouse.leftPress();
-                    Thread.sleep(startDrawDuration);
-                    mouse.smoothMoveTo(point.overlay(p));
-                    Thread.sleep(endDrawDuration);
-                    mouse.leftRelease();
-                } catch (InterruptedException ignore) {
+                // 绘制过去
+                if (!isLeftPress) {
+                    leftPress();
+                    try {
+                        Thread.sleep(startDrawDuration);
+                    } catch (InterruptedException ignore) {
+                    }
                 }
+                smoothMoveTo(point.overlay(p));
             } else {
                 // 移动过去
-                mouse.moveTo(point.overlay(p));
+                if (isLeftPress) {
+                    try {
+                        Thread.sleep(endDrawDuration);
+                    } catch (InterruptedException ignore) {
+                    }
+                    leftRelease();
+                }
+                moveTo(point.overlay(p));
             }
         });
+        // 完成绘制
+        if (isLeftPress) {
+            try {
+                Thread.sleep(endDrawDuration);
+            } catch (InterruptedException ignore) {
+            }
+            leftRelease();
+        }
     }
 
     /**

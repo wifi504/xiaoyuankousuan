@@ -1,0 +1,54 @@
+Manifest-Version: 1.0
+Main-Class: com.lhl.xyks.temp.GenerateTrainingData
+Class-Path: xml-apis-1.3.04.jar animation-1.3.10.jar jbibtex-1.0.2.jar n
+ etlib-native_system-linux-x86_64-1.1-natives.jar jboss-logging-3.1.4.GA
+ .jar netlib-native_ref-linux-x86_64-1.1-natives.jar la4j-0.4.0.jar stax
+ -api-1.0-2.jar guava-25.1-jre.jar imageio-core-3.3.2.jar ecj-4.4.2.jar 
+ jmatio-1.2.jar jbig2-imageio-3.0.4.jar plexus-utils-1.5.6.jar arpack_co
+ mbined_all-0.1.jar commons-vfs2-2.0.jar log4j-1.2.17.jar sanselan-0.97-
+ incubator.jar maven-scm-provider-svnexe-1.4.jar commons-io-2.11.0.jar i
+ cu4j-57.1.jar trove4j-3.0.2.jar regexp-1.3.jar netlib-java-0.9.3.jar js
+ on-simple-1.1.jar jsr305-3.0.2.jar concurrent-1.3.4.jar jgrapht-0.8.2.j
+ ar castor-core-1.3.3.jar jcommon-1.0.23.jar JTransforms-1.3.10.jar java
+ ssist-3.12.1.GA.jar jeuclid-core-3.1.9.jar netlib-native_system-linux-a
+ rmhf-1.1-natives.jar httpcore-4.4.10.jar batik-svg-dom-1.7.jar core-cit
+ ation-1.3.10.jar lept4j-1.16.2.jar netlib-native_system-osx-x86_64-1.1-
+ natives.jar jatl-0.2.1.jar cloning-1.9.10.jar tess4j-5.4.0.jar ant-1.8.
+ 4.jar jackson-annotations-2.13.0.jar javax.inject-1.jar animal-sniffer-
+ annotations-1.14.jar j2objc-annotations-1.1.jar xmlpull-1.1.3.1.jar gov
+ -sandia-cognition-common-core-3.3.0.jar core-feature-1.3.10.jar xpp3_mi
+ n-1.1.4c.jar native_system-java-1.1.jar batik-anim-1.7.jar core-1.1.2.j
+ ar axis-1.4.jar asm-4.0.jar batik-ext-1.7.jar jfreechart-1.0.13.jar ima
+ ge-processing-1.3.10.jar core-experiment-1.3.10.jar core-video-1.3.10.j
+ ar IREval-1.3.10.jar commons-lang-2.6.jar netlib-native_ref-osx-x86_64-
+ 1.1-natives.jar jai-core-1.1.3.jar objenesis-1.2.jar bezier-utils-1.0.0
+ -RELEASE.jar scribe-1.3.5.jar jama-1.0.3.jar colt-1.2.0.jar common-lang
+ -3.3.2.jar batik-css-1.7.jar snuggletex-upconversion-1.2.2.jar reflecta
+ sm-1.07-shaded.jar imageio-jpeg-3.3.2.jar jfreechart-1.0.19.jar pdfbox-
+ 2.0.26.jar common-image-3.3.2.jar httpclient-4.5.6.jar netlib-native_sy
+ stem-linux-i686-1.1-natives.jar commons-collections-3.2.2.jar kryo-2.21
+ .jar ant-launcher-1.8.4.jar maven-scm-api-1.4.jar jackson-databind-2.13
+ .0.jar core-audio-1.3.10.jar slf4j-simple-1.7.30.jar netlib-native_ref-
+ linux-armhf-1.1-natives.jar core-1.3.10.jar bcprov-jdk15on-1.52.jar min
+ log-1.2.jar batik-dom-1.7.jar checker-qual-2.0.0.jar batik-awt-util-1.7
+ .jar common-io-3.3.2.jar jai-imageio-core-1.4.0.jar stax-api-1.0.1.jar 
+ batik-xml-1.7.jar jal-20031117.jar log4j-core-2.11.0.jar fontbox-2.0.26
+ .jar batik-parser-1.7.jar netlib-native_ref-linux-i686-1.1-natives.jar 
+ xmlgraphics-commons-1.3.1.jar core-image-1.3.10.jar commons-math-2.2.ja
+ r jackson-core-2.13.0.jar commons-codec-1.10.jar jai-codec-1.1.3.jar ma
+ ven-scm-provider-svn-commons-1.4.jar flickr4java-2.13_jonhare_040805961
+ 5bfa8da071c2e54268e3004ce62d6a4.jar netlib-native_system-win-i686-1.1-n
+ atives.jar MatrixLib-1.3.10.jar netlib-native_ref-win-x86_64-1.1-native
+ s.jar jsoup-1.6.3.jar saxon9-dom-9.1.0.8.jar jcommon-1.0.16.jar batik-u
+ til-1.7.jar ascii-table-1.0.jar slf4j-api-1.7.36.jar xml-apis-ext-1.3.0
+ 4.jar itext-2.1.7.js6.jar native_ref-java-1.1.jar jafama-2.1.0.jar saxo
+ n9-9.1.0.8.jar commons-math3-3.3.jar imageio-metadata-3.3.2.jar stax-1.
+ 2.0.jar core-aop-support-1.3.10.jar jniloader-1.1.jar error_prone_annot
+ ations-2.1.3.jar netlib-native_system-win-x86_64-1.1-natives.jar snuggl
+ etex-jeuclid-1.2.2.jar netlib-native_ref-win-i686-1.1-natives.jar jboss
+ -vfs-3.2.17.Final.jar mtj-1.0.2.jar snuggletex-core-1.2.2.jar jna-5.12.
+ 1.jar gov-sandia-cognition-learning-core-3.3.0.jar core-math-1.3.10.jar
+  castor-xml-1.3.3.jar jasperreports-6.6.0.jar commons-logging-1.2.jar c
+ ommons-beanutils-1.9.3.jar log4j-api-2.11.0.jar commons-digester-2.1.ja
+ r xstream-1.4.3.jar pdfbox-tools-2.0.26.jar pdfbox-debugger-2.0.26.jar
+
