@@ -1,9 +1,12 @@
-class Screen 屏幕工具类
-一、成员变量
+# class Screen 屏幕工具类
+
+## 一、成员变量
+
 Screen screen
 null，单例（对应有个单例的Robot）
 
-二、方法
+## 二、方法
+
 《静态》
 Screen getScreen()
 返回一个单例的Screen对象（对应有个单例的Robot）
