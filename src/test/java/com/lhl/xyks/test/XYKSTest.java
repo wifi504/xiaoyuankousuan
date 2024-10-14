@@ -33,9 +33,6 @@ public class XYKSTest {
 //            MouseDraw.drawSymbolsAtPos(2560, 656, randomDouble);
             Mouse mouse = Mouse.getMouse();
             mouse.setDrawSymbolWidth(50);
-            mouse.setDefaultMoveInterval(0);
-            mouse.setEndDrawDuration(100);
-            mouse.setStartDrawDuration(50);
             mouse.drawSymbols(randomDouble);
             try {
                 Thread.sleep(3000);

@@ -27,7 +27,7 @@ public class Mouse {
     private long defaultMoveInterval = 1;
 
     // 连续绘制符号时，每个符号间的时间间隔（ms）
-    private long drawSymbolInterval = 10;
+    private long drawSymbolInterval = 5;
 
     // 关于落笔与停笔时间：
     // 防止因为鼠标按下瞬间开始移动和移动到终点瞬间就松开时，
@@ -334,6 +334,10 @@ public class Mouse {
             char symbol = symbols.charAt(i);
             drawSymbol(symbol, point);
             point = point.overlay(p);
+            try {
+                Thread.sleep(drawSymbolInterval);
+            } catch (InterruptedException ignore) {
+            }
         }
     }
 }

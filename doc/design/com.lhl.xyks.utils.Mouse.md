@@ -1,5 +1,7 @@
-class Mouse 鼠标工具类
-一、成员变量
+# class Mouse 鼠标工具类
+
+## 一、成员变量
+
 Mouse mouse 
 null，单例（对应有个单例的Robot）
 
@@ -22,7 +24,8 @@ HashMap<Character, ArrayList<Point>> symbolMap
 
 
 
-二、方法
+## 二、方法
+
 《静态》
 Mouse getMouse() 
 返回一个单例的Mouse对象，可以执行一系列鼠标动作
