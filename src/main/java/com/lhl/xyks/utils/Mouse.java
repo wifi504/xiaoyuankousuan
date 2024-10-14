@@ -45,16 +45,10 @@ public class Mouse {
     // 符号映射文件中的坐标是相对坐标，在一个宽100高200的范围内，依次存放每个笔画起止点
     private static HashMap<Character, ArrayList<Point>> symbolMap = null;
 
-
-    // ------------ 静态方法 ------------ //
-
     /**
-     * 返回一个单例的 Mouse 对象，可以执行一系列鼠标动作
-     *
-     * @return 单例的 Mouse 对象
+     * 构造方法私有化
      */
-    public static Mouse getMouse() {
-        if (mouse != null) return mouse;
+    private Mouse() {
         // 初始化 Robot 实例
         try {
             robot = new Robot();
@@ -67,7 +61,18 @@ public class Mouse {
         } catch (IOException e) {
             throw new RuntimeException("无法初始化绘制符号映射，程序终止", e);
         }
-        // 初始化 Mouse 实例
+    }
+
+
+    // ------------ 静态方法 ------------ //
+
+    /**
+     * 返回一个单例的 Mouse 对象，可以执行一系列鼠标动作
+     *
+     * @return 单例的 Mouse 对象
+     */
+    public static Mouse getMouse() {
+        if (mouse != null) return mouse;
         mouse = new Mouse();
         return mouse;
     }
@@ -234,7 +239,6 @@ public class Mouse {
 
 
     // ------------ 符号绘制 ------------ //
-
 
     /**
      * 设置每个符号间的时间间隔
