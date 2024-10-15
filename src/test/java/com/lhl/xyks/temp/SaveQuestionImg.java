@@ -53,9 +53,9 @@ public class SaveQuestionImg {
 
             // 5. 将二值化结果转换为 BufferedImage 并保存
             BufferedImage binaryOutput = ImageUtilities.createBufferedImage(binaryImage);
-            ImageIO.write(binaryOutput, "png", new File("binary_output_openimaj.png"));
+            ImageIO.write(binaryOutput, "png", new File("binary.png"));
 
-            System.out.println("二值化处理完成并保存为 binary_output_openimaj.png");
+            System.out.println("二值化处理完成并保存为 binary.png");
 
         } catch (IOException e) {
             e.printStackTrace();
