@@ -1,7 +1,6 @@
 package com.lhl.xyks.temp;
 
 import com.lhl.xyks.utils.ImageTools;
-import org.junit.Test;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -19,6 +18,12 @@ import java.util.UUID;
  * Create Time: 2024/10/16_1:55
  */
 public class HandleTrainingData {
+
+    public HandleTrainingData setFolderPath(String folderPath) {
+        this.folderPath = folderPath;
+        return this;
+    }
+
     // 自动化截图完毕后，会得到若干源文件，我们需要进行一些处理以供训练
     String folderPath = "training-data"; // training-data 目录
 
@@ -47,8 +52,10 @@ public class HandleTrainingData {
     // Step1.
     // 处理文本文档：所有的 + - * / = ? 左右两侧都得有 1 个空格
     // 这样在训练时，总会把一组一组的数字认为是 word 提高准确率
-    @Test
     public void step1() {
+        // 比大小的题有可能没有问号，这种得人工加空格
+        StringBuilder edit = new StringBuilder();
+
         // 把每个txt文件拿出来
         pngFileNameList.forEach(name -> {
             System.out.println("<------- " + name + " ------->");
@@ -67,6 +74,12 @@ public class HandleTrainingData {
                 e.printStackTrace();
             }
             System.out.println("原始内容：" + text);
+
+            // 找到特殊的比较文件
+            if (name.contains("compare") && !text.toString().contains("?")) {
+                edit.append(name).append("\n");
+            }
+
             // 遍历读到的字符
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < text.length(); i++) {
@@ -99,11 +112,13 @@ public class HandleTrainingData {
 
             System.out.println();
         });
+
+        System.out.println("请人工处理以下项：");
+        System.out.println(edit);
     }
 
     // Step2.
     // 去重，题目很显然是有概率重复的，根据txt内容把重复的删除掉
-    @Test
     public void step2() {
         // 使用 HashSet 来存储唯一的文本内容
         HashSet<String> uniqueContents = new HashSet<>();
@@ -175,7 +190,6 @@ public class HandleTrainingData {
     // _w1.25h1.25 _w1.5h1.5 _w0.75h0.75 _w1.25h1.0 _w1.0h1.25
     // 所有原始的文件，后缀加上 _w1.0h1.0 （无任何缩放）
     // !!! 经过测试，一个png会衍生出18个来，太爆炸了，放弃 _w0.75h0.75 _w1.0h1.25
-    @Test
     public void step3() {
         // 把每个png文件拿出来
         pngFileNameList.forEach(name -> {
@@ -233,7 +247,6 @@ public class HandleTrainingData {
     // 生成 模糊(1.5) 版本 再生成 锐化(2) 版本
     // _blur1.5 _sharpen2
     // 所有原始的文件，后缀加上 _normal （无任何滤镜）
-    @Test
     public void step4() {
         // 把每个png文件拿出来
         pngFileNameList.forEach(name -> {
@@ -271,7 +284,6 @@ public class HandleTrainingData {
 
     // Step5.
     // Tesseract 5.0 的模型训练，要求 .txt 文件的结尾是 .gt.txt
-    @Test
     public void step5() {
         // 把每个txt文件拿出来
         pngFileNameList.forEach(name -> {
@@ -293,7 +305,6 @@ public class HandleTrainingData {
     // 打乱所有数据的顺序是一个不错的选择
     // 在正式训练之前，文件名UUID化会导致检查训练数据工作变得很艰难
     // 谨慎执行这一步！
-    @Test
     public void step6() {
         // 遍历每个 png 文件
         pngFileNameList.forEach(name -> {

@@ -3,7 +3,6 @@ package com.lhl.xyks.temp;
 import com.lhl.xyks.pojo.Area;
 import com.lhl.xyks.utils.ImageTools;
 import com.lhl.xyks.utils.Screen;
-import org.junit.Test;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -17,7 +16,6 @@ import java.util.Scanner;
  */
 public class GenerateTrainingData {
 
-    @Test
     public void gen() {
         // 准备模型训练数据
         File folder = new File("training-data");
@@ -83,9 +81,5 @@ public class GenerateTrainingData {
                 e.printStackTrace();
             }
         }
-    }
-
-    public static void main(String[] args) {
-        new GenerateTrainingData().gen();
     }
 }
