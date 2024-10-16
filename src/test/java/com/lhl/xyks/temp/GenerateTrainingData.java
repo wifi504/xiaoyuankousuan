@@ -84,4 +84,8 @@ public class GenerateTrainingData {
             }
         }
     }
+
+    public static void main(String[] args) {
+        new GenerateTrainingData().gen();
+    }
 }
