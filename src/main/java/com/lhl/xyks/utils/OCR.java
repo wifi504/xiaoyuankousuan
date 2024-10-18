@@ -24,8 +24,15 @@ public class OCR {
         File tessdata = new File("tessdata");
         String dataPath = tessdata.getAbsolutePath().replaceAll("\\\\", "/");
         tesseract.setDatapath(dataPath);
-        tesseract.setLanguage("eng");
-        tesseract.setTessVariable("tessedit_char_whitelist", ".x?0123456789");
+        // 设置使用的语言模型
+        tesseract.setLanguage("xyks2");  // 修改为你自定义的语言
+
+        // 设置页面分割模式 (PSM)
+        tesseract.setPageSegMode(6);  // 假设输入为单块文本
+
+        tesseract.setVariable("tessedit_write_unlv", "0");  // 仅输出最高置信度字符
+        tesseract.setVariable("classify_enable_learning", "0");  // 禁用学习候选字符
+        tesseract.setVariable("tessedit_char_whitelist", "0123456789.+-*/=?");  // 设置识别白名单
     }
 
     /**
