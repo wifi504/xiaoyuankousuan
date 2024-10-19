@@ -1,7 +1,13 @@
 package com.lhl.xyks.test.utils;
 
+import com.benjaminwan.ocrlibrary.OcrResult;
 import com.lhl.xyks.utils.ImageTools;
-import com.lhl.xyks.utils.OCR;
+import com.lhl.xyks.utils.ocr.impl.ChineseOCRImpl;
+import com.lhl.xyks.utils.ocr.impl.EngOCRImpl;
+import com.lhl.xyks.utils.ocr.impl.PaddleOCRImpl;
+import com.lhl.xyks.utils.ocr.impl.XyksOCRImpl;
+import io.github.mymonstercat.Model;
+import io.github.mymonstercat.ocr.InferenceEngine;
 import org.junit.Test;
 
 import java.awt.image.BufferedImage;
@@ -17,14 +23,28 @@ import java.util.HashMap;
 public class OCRTest {
 
     @Test
+    public void testRapidOcr() {
+        InferenceEngine engine = InferenceEngine.getInstance(Model.ONNX_PPOCR_V3);
+        OcrResult ocrResult = engine.runOcr("training-data/arithmetic_n5.png");
+        System.out.println(ocrResult.getStrRes().trim());
+    }
+
+    @Test
     public void testRecognizeFormula() throws IOException {
-        OCR ocr = new OCR();
-        System.out.println(ocr.recognize(ImageTools.readImageFromFile(new File("D:/binary.png"))));
+        File file = new File("training-data/division_n13.png");
+        System.out.println("--------< 小猿模型 >-------");
+        System.out.println(new XyksOCRImpl().recognize(file));
+        System.out.println("--------< eng模型 >-------");
+        System.out.println(new EngOCRImpl().recognize(file));
+        System.out.println("--------< zh-cn模型 >-------");
+        System.out.println(new ChineseOCRImpl().recognize(file));
+        System.out.println("--------< paddle模型 >-------");
+        System.out.println(new PaddleOCRImpl().recognize(file));
     }
 
     @Test
     public void testRecognizeImages() throws IOException {
-        OCR ocr = new OCR();
+        XyksOCRImpl ocr = new XyksOCRImpl();
         int pass = 0;
         int total = 50;
         for (int i = 1; i <= total; i++) {
@@ -111,19 +131,19 @@ public class OCRTest {
         String[] result = new String[4];
 
         Thread t1 = new Thread(() -> {
-            OCR ocr = new OCR();
+            XyksOCRImpl ocr = new XyksOCRImpl();
             result[0] = ocr.recognize(image).trim();
         });
         Thread t2 = new Thread(() -> {
-            OCR ocr = new OCR();
+            XyksOCRImpl ocr = new XyksOCRImpl();
             result[1] = ocr.recognize(ImageTools.resizePNG(image, 1.5, 1)).trim();
         });
         Thread t3 = new Thread(() -> {
-            OCR ocr = new OCR();
+            XyksOCRImpl ocr = new XyksOCRImpl();
             result[2] = ocr.recognize(ImageTools.blurPNG(image, 1.5f)).trim();
         });
         Thread t4 = new Thread(() -> {
-            OCR ocr = new OCR();
+            XyksOCRImpl ocr = new XyksOCRImpl();
             result[3] = ocr.recognize(ImageTools.sharpenPNG(ImageTools.blurPNG(image, 1.5f), 2f)).trim();
         });
 

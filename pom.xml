@@ -27,6 +27,18 @@
             <artifactId>tess4j</artifactId>
             <version>5.4.0</version>
         </dependency>
+        <!-- RapidOcr -->
+        <dependency>
+            <groupId>io.github.mymonstercat</groupId>
+            <artifactId>rapidocr</artifactId>
+            <version>0.0.7</version>
+        </dependency>
+        <!-- 一般只需要引入一个，CPU端建议使用onnx -->
+        <dependency>
+            <groupId>io.github.mymonstercat</groupId>
+            <artifactId>rapidocr-onnx-platform</artifactId>
+            <version>0.0.7</version>
+        </dependency>
         <!-- 酸辣粉日志 -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -37,7 +49,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.13.0</version>
+            <version>2.13.4.1</version>
         </dependency>
         <!-- 图像处理 OpenIMAJ -->
         <dependency>

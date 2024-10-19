@@ -1,5 +1,6 @@
-package com.lhl.xyks.utils;
+package com.lhl.xyks.utils.ocr.impl;
 
+import com.lhl.xyks.utils.ocr.OCR;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 
@@ -7,25 +8,25 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 /**
- * 屏幕识别工具类
+ * 屏幕识别工具类(小猿口算自训练专用模型)
  *
  * @author WIFI连接超时
  * @version 2.0
  * Create Time: 2024/10/14_16:04
  */
-public class OCR {
+public class XyksOCRImpl implements OCR {
 
-    private final Tesseract tesseract = new Tesseract();
+    private static final Tesseract tesseract = new Tesseract();
 
     /**
      * 构造方法，每个 OCR 对应一个 Tesseract 对象
      */
-    public OCR() {
+    public XyksOCRImpl() {
         File tessdata = new File("tessdata");
         String dataPath = tessdata.getAbsolutePath().replaceAll("\\\\", "/");
         tesseract.setDatapath(dataPath);
         // 设置使用的语言模型
-        tesseract.setLanguage("xyks2");  // 修改为你自定义的语言
+        tesseract.setLanguage("xyks2");
 
         // 设置页面分割模式 (PSM)
         tesseract.setPageSegMode(6);  // 假设输入为单块文本
