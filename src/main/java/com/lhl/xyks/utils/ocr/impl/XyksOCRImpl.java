@@ -63,4 +63,9 @@ public class XyksOCRImpl implements OCR {
             return e.getMessage();
         }
     }
+
+    @Override
+    public String optimize(String text) {
+        return text.replaceAll("\\s+", "");
+    }
 }

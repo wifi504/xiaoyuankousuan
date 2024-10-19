@@ -12,11 +12,6 @@ import java.io.File;
  */
 public interface OCR {
 
-    /*
-        目前各个模型的指标为：
-
-     */
-
     /**
      * 从 BufferedImage 中识别
      *
@@ -32,4 +27,13 @@ public interface OCR {
      * @return 识别结构
      */
     String recognize(File file);
+
+    /**
+     * 识别结果优化器
+     * 把算式尽量往结果上靠
+     *
+     * @param text 原文本
+     * @return 优化文本
+     */
+    String optimize(String text);
 }

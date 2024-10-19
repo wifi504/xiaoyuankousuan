@@ -53,4 +53,10 @@ public class EngOCRImpl implements OCR {
             return e.getMessage();
         }
     }
+
+    @Override
+    public String optimize(String text) {
+        String s = text.replaceAll("\\s+", "");
+        return s.replaceAll("x", "*");
+    }
 }

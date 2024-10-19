@@ -10,6 +10,8 @@ import java.io.File;
 /**
  * 屏幕识别工具类(Tesseract chi_sim 模型)
  *
+ * 根据第一轮识别结果，此模型在实际环境被弃用
+ *
  * @author WIFI连接超时
  * @version 1.0
  * Create Time 2024/10/19_2:45
@@ -52,5 +54,10 @@ public class ChineseOCRImpl implements OCR {
         } catch (TesseractException e) {
             return e.getMessage();
         }
+    }
+
+    @Override
+    public String optimize(String text) {
+        return text;
     }
 }
