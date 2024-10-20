@@ -92,6 +92,17 @@ public class Screen {
         return new Color(pxColor.getRGB());
     }
 
+    /**
+     * 获取全屏区域
+     *
+     * @return Area
+     */
+    public Area getFullScreenArea() {
+        // 获取屏幕的尺寸
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        return new Area(0, 0, screenSize.width, screenSize.height);
+    }
+
 
     // ------------ 线程管理 ------------ //
 

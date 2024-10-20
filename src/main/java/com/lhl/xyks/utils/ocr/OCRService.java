@@ -1,6 +1,6 @@
 package com.lhl.xyks.utils.ocr;
 
-import com.lhl.xyks.utils.ocr.impl.ChineseOCRImpl;
+// import com.lhl.xyks.utils.ocr.impl.ChineseOCRImpl;
 import com.lhl.xyks.utils.ocr.impl.EngOCRImpl;
 import com.lhl.xyks.utils.ocr.impl.PaddleOCRImpl;
 import com.lhl.xyks.utils.ocr.impl.XyksOCRImpl;
@@ -16,7 +16,7 @@ public class OCRService {
 
     private static final OCR xyks = new XyksOCRImpl();
     private static final OCR eng = new EngOCRImpl();
-    private static final OCR zh = new ChineseOCRImpl();
+    // private static final OCR zh = new ChineseOCRImpl();
     private static final OCR paddle = new PaddleOCRImpl();
 
 
@@ -24,7 +24,7 @@ public class OCRService {
         return switch (model) {
             case "xyks" -> xyks;
             case "eng" -> eng;
-            case "zh" -> zh;
+            // case "zh" -> zh;
             case "paddle" -> paddle;
             default -> null;
         };

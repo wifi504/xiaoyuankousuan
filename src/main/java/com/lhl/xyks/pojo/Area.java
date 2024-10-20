@@ -20,4 +20,14 @@ public class Area {
         this.width = width;
         this.height = height;
     }
+
+    @Override
+    public String toString() {
+        return "Area{" +
+                "x=" + x +
+                ", y=" + y +
+                ", width=" + width +
+                ", height=" + height +
+                '}';
+    }
 }

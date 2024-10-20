@@ -18,6 +18,7 @@ import java.awt.image.BufferedImage;
  */
 public class ScreenSelector {
     private Area selectedArea;
+    private com.lhl.xyks.pojo.Point selectedPoint;
 
     /**
      * 使用鼠标框选一个区域，得到 Area
@@ -34,7 +35,7 @@ public class ScreenSelector {
         screenImageWindow.setVisible(true);
 
         // 创建并显示选择器窗口
-        SelectorWindow selectorWindow = new SelectorWindow(screenImageWindow);
+        SelectorWindow selectorWindow = new SelectorWindow(screenImageWindow, true);
         selectorWindow.setVisible(true);
 
         // 阻塞，直到选择完成，返回区域
@@ -47,6 +48,36 @@ public class ScreenSelector {
 
         // 返回选择的区域
         return selectedArea;
+    }
+
+    /**
+     * 使用鼠标选择一个点，得到 Point
+     * 使用方式类似于截图工具
+     *
+     * @return Point
+     */
+    public com.lhl.xyks.pojo.Point getSelectorPoint() {
+        Screen screen = Screen.getScreen();
+        BufferedImage capture = screen.capture(screen.getFullScreenArea());
+
+        // 创建并显示全屏截图窗口
+        ScreenImageWindow screenImageWindow = new ScreenImageWindow(capture);
+        screenImageWindow.setVisible(true);
+
+        // 创建并显示选择器窗口
+        SelectorWindow selectorWindow = new SelectorWindow(screenImageWindow, false);
+        selectorWindow.setVisible(true);
+
+        // 阻塞，直到选择完成，返回区域
+        synchronized (this) {
+            try {
+                wait();  // 等待选择完成
+            } catch (InterruptedException ignore) {
+            }
+        }
+
+        // 返回选择的点
+        return selectedPoint;
     }
 
     // 全屏显示当前屏幕截图的窗口
@@ -74,8 +105,11 @@ public class ScreenSelector {
         private Point startPoint;
         private final Rectangle selectedRect;
         private Point mousePoint;  // 当前鼠标位置
+        private final boolean isArea;
 
-        public SelectorWindow(JWindow screenImageWindow) {
+        public SelectorWindow(JWindow screenImageWindow, boolean isArea) {
+            this.isArea = isArea;
+
             startPoint = new Point();
             selectedRect = new Rectangle();
             mousePoint = new Point();
@@ -97,11 +131,16 @@ public class ScreenSelector {
 
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    updateSelectedRect(e.getPoint());
+                    Point point = e.getPoint();
+                    updateSelectedRect(point);
                     selectedArea = new Area(selectedRect.x, selectedRect.y, selectedRect.width, selectedRect.height);  // 构造选择的区域
 
                     dispose();
                     screenImageWindow.dispose();
+
+                    com.lhl.xyks.pojo.Color color = Screen.getScreen().getColorAt(new com.lhl.xyks.pojo.Point(point.x, point.y));
+                    selectedPoint = new com.lhl.xyks.pojo.Point(point.x, point.y, color); // 构造选择的点
+
                     synchronized (ScreenSelector.this) {
                         ScreenSelector.this.notify();  // 通知等待中的线程
                     }
@@ -146,7 +185,7 @@ public class ScreenSelector {
             g2d.drawLine(0, mousePoint.y, getWidth(), mousePoint.y);  // 横线
 
             // 绘制选择的矩形区域
-            if (selectedRect.width > 0 && selectedRect.height > 0) {
+            if (isArea && selectedRect.width > 0 && selectedRect.height > 0) {
                 drawSelectionRect(g2d, selectedRect);  // 使用提取的函数绘制矩形
             }
         }

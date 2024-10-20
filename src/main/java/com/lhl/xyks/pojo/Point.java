@@ -16,6 +16,15 @@ public class Point extends java.awt.Point {
      */
     public boolean isSolid = true;
 
+    /**
+     * 点可以携带一个颜色
+     */
+    public Color color = null;
+
+    public Point() {
+        super();
+    }
+
     public Point(int x, int y) {
         super(x, y);
     }
@@ -23,6 +32,11 @@ public class Point extends java.awt.Point {
     public Point(int x, int y, boolean isSolid) {
         super(x, y);
         this.isSolid = isSolid;
+    }
+
+    public Point(int x, int y, Color color) {
+        super(x, y);
+        this.color = color;
     }
 
     /**
@@ -45,12 +59,14 @@ public class Point extends java.awt.Point {
         return new Point((int) (x * scale), (int) (y * scale), isSolid);
     }
 
+
     @Override
     public String toString() {
         return "Point{" +
                 "x=" + x +
                 ", y=" + y +
                 ", isSolid=" + isSolid +
+                ", color=" + color +
                 '}';
     }
 }
