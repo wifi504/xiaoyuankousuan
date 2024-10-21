@@ -30,6 +30,12 @@ public class Color extends java.awt.Color {
 
     // ------------ 静态方法 ------------ //
 
+    /**
+     * 根据十六进制颜色字符串获取颜色对象
+     *
+     * @param hex 十六进制色
+     * @return Color
+     */
     public static Color hexToColor(String hex) {
         // 去除 # 前缀（如果有）
         hex = hex.startsWith("#") ? hex.substring(1) : hex;
@@ -38,6 +44,18 @@ public class Color extends java.awt.Color {
         int rgb = Integer.parseInt(hex, 16);
 
         return new Color(rgb);
+    }
+
+    /**
+     * 根据颜色对象获取对应的十六进制颜色字符串
+     *
+     * @param color 颜色对象
+     * @return 十六进制颜色字符串（带 # 前缀）
+     */
+    public static String colorToHex(Color color) {
+        // 获取红色、绿色、蓝色值并转换为两位十六进制字符串
+
+        return String.format("#%02X%02X%02X", color.getRed(), color.getGreen(), color.getBlue());
     }
 
 

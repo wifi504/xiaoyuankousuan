@@ -245,8 +245,7 @@ public class MouseDraw {
             // 休眠，控制移动速度
             try {
                 Thread.sleep(moveDelay);  // 使用动态延迟控制速度
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            } catch (InterruptedException ignore) {
             }
         }
     }

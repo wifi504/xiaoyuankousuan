@@ -89,7 +89,7 @@ public class XYKSTest {
 
     @Test
     public void testDoMathMultiply() {
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 1; i++) {
             System.out.println("开始答题");
             Pause.waitPosColorLike(new Point(2519, 121), Pause.hexToColor("#FEE305"));
             DoMathMultiply.execute(10);
@@ -99,15 +99,16 @@ public class XYKSTest {
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            Pause.waitPosColorLike(new Point(2794, 526), Pause.hexToColor("#FFD943"));
-            MouseDraw.clickAt(2794, 526);
+            // 开心收下
+            Pause.waitPosColorLike(new Point(2833, 853), Pause.hexToColor("#FFD537"));
+            MouseDraw.clickAt(2833, 853);
             try {
                 Thread.sleep(500);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             MouseDraw.clickAt(2923, 932);
-            Pause.waitPosColorLike(new Point(2845, 815), Pause.hexToColor("#FBDA4A"));
+            Pause.waitPosColorLike(new Point(2924, 1001), Pause.hexToColor("#FFD728"));
             System.out.println("准备匹配");
             int randomNumber = 1000 + new Random().nextInt(4001);
             System.out.println("等待" + randomNumber / 1000.0 + "秒后进入匹配（随机0~5）");
@@ -117,7 +118,7 @@ public class XYKSTest {
                 e.printStackTrace();
             }
             System.out.println("进入匹配！");
-            MouseDraw.clickAt(2845, 815);
+            MouseDraw.clickAt(2930, 918);
             try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {

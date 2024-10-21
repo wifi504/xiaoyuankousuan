@@ -16,7 +16,8 @@ public class DoMathMultiply {
 
     public static void execute(int qSize) {
         int i = 0;
-        while (!Pause.isPosColorLike(new Point(2592, 307), Pause.hexToColor("#FFFFFF"))) {
+        // 如果蓝色没变白
+        while (!Pause.isPosColorLike(new Point(2614, 144), Pause.hexToColor("#FFFFFF"))) {
             Pause.waitPosColorLike(absPoint, Pause.hexToColor("#E7EFFE"), 1000);
             if (i == 0 || ocrOld.equals(ocrNew)) {
                 work(current);
@@ -33,9 +34,9 @@ public class DoMathMultiply {
 
     // 题目划区
     // 当前题目
-    static Area current = new Area(2525, 267, 234, 92);
+    static Area current = new Area(2540, 320, 423, 115);
     // 下一题目
-    static Area next = new Area(2560, 378, 194, 70);
+    static Area next = new Area(2563, 443, 360, 79);
 
     // 判题的计算式
     static String formula = "";
