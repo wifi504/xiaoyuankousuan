@@ -79,7 +79,8 @@ public class MouseTest {
     public void testDrawSymbol() throws InterruptedException {
         Thread.sleep(1000);
         Mouse mouse = Mouse.getMouse();
-        mouse.drawSymbols("365");
+        mouse.setDrawSymbolWidth(80);
+        mouse.drawSymbols("12345<>5555");
     }
 
     @Test

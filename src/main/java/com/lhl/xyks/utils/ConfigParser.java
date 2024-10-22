@@ -104,6 +104,10 @@ public class ConfigParser {
             //  中断答题的快捷键
             // terminateKeyCombination=10
             globalConfig.terminateKeyCombination = properties.getProperty("terminateKeyCombination");
+            // 小猿口算软件内题目间切换动画时长（ms）
+            // questionAnimationDuration=200
+            String questionAnimationDuration = properties.getProperty("questionAnimationDuration");
+            globalConfig.questionAnimationDuration = Long.parseLong(questionAnimationDuration);
             //  默认的鼠标进行每单位移动时的时间间隔（ms）
             // defaultMoveInterval=1
             String defaultMoveInterval = properties.getProperty("defaultMoveInterval");
@@ -171,6 +175,8 @@ public class ConfigParser {
             properties.setProperty("mistakeTryNum", String.valueOf(globalConfig.mistakeTryNum));
             // 中断答题的快捷键
             properties.setProperty("terminateKeyCombination", globalConfig.terminateKeyCombination);
+            // 小猿口算软件内题目间切换动画时长（ms）
+            properties.setProperty("questionAnimationDuration", String.valueOf(globalConfig.questionAnimationDuration));
             // 默认的鼠标进行每单位移动时的时间间隔（ms）
             properties.setProperty("defaultMoveInterval", String.valueOf(globalConfig.defaultMoveInterval));
             // 连续绘制符号时，每个符号间的时间间隔（ms）
@@ -222,6 +228,8 @@ public class ConfigParser {
                 mistakeTryNum=5
                 # 中断答题的快捷键
                 terminateKeyCombination=10
+                # 小猿口算软件内题目间切换动画时长（ms）
+                questionAnimationDuration=200
                 # 默认的鼠标进行每单位移动时的时间间隔（ms）
                 defaultMoveInterval=1
                 # 连续绘制符号时，每个符号间的时间间隔（ms）
@@ -308,6 +316,7 @@ public class ConfigParser {
         public int questionsNum;
         public int mistakeTryNum;
         public String terminateKeyCombination;
+        public long questionAnimationDuration;
         public long defaultMoveInterval;
         public long drawSymbolInterval;
         public long startDrawDuration;

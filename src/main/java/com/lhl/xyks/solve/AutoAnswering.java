@@ -30,6 +30,8 @@ public class AutoAnswering {
     static int currentNum = 0; // 当前题号
     static int index = 0; // 当前循环回合
     static boolean isFirst = true; // 绘制的答案来自当前题目吗
+    static BufferedImage currentImage; // 上面的题缓存
+    static BufferedImage nextImage; // 下面的题缓存
 
     /**
      * 执行连续的自动答题
@@ -64,8 +66,8 @@ public class AutoAnswering {
             if (isFirst) {
                 isFirst = false;
                 // 如果是第一次，先识别再画答案
-                BufferedImage currentImage = screen.capture(ConfigParser.globalConfig.currentArea);
-                BufferedImage nextImage = screen.capture(ConfigParser.globalConfig.nextArea);
+                currentImage = screen.capture(ConfigParser.globalConfig.currentArea);
+                nextImage = screen.capture(ConfigParser.globalConfig.nextArea);
 
                 currentImage = ImageTools.pngToBinary(currentImage, 0.5f);
                 String currentResult;
@@ -93,18 +95,26 @@ public class AutoAnswering {
                 log("[当前识别模式] currentResult=" + currentResult + "，nextResult=" + nextResult);
             } else {
                 // 画当前题
-                BufferedImage image = screen.capture(ConfigParser.globalConfig.nextArea);
                 waitDraw();
                 doDraw(questions.get(-1 + currentNum));
+
+                // 理论上这里是小猿口算软件内算式切换的动画时长
+                try {
+                    Thread.sleep(ConfigParser.globalConfig.questionAnimationDuration);
+                } catch (InterruptedException ignore) {
+                }
+
+                // 截取下面的题 （等动画过去再截图，否则容易截到上一张）
+                nextImage = screen.capture(ConfigParser.globalConfig.nextArea);
                 if (currentNum != num) {
                     // 已经有当前答案了，只需要识别下一题
-                    image = ImageTools.pngToBinary(image, 0.85f);
-                    image = ImageTools.resizePNG(image, 1.4, 1.4);
+                    nextImage = ImageTools.pngToBinary(nextImage, 0.85f);
+                    nextImage = ImageTools.resizePNG(nextImage, 1.4, 1.4);
                     String result;
                     if (ConfigParser.globalConfig.allowOCRMultiThreading) {
-                        result = questionOCR.multiOCR(image);
+                        result = questionOCR.multiOCR(nextImage);
                     } else {
-                        result = questionOCR.singleOCR(image);
+                        result = questionOCR.singleOCR(nextImage);
                     }
                     log("[预先识别模式] result=" + result);
                     // 如果识别到的下一题和理论上的当前题一致，说明上一题失败了，重来
@@ -165,15 +175,15 @@ public class AutoAnswering {
             log("[wait] 笔刷条件成立");
             Mouse.checkHandwriting = null;
         }
-        long end = System.currentTimeMillis();
-        if (end - start < 500) {
-            try {
-                log("[wait] 固定延迟...");
-                Thread.sleep(500 - end + start);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
+//        long end = System.currentTimeMillis();
+//        if (end - start < 200) {
+//            try {
+//                log("[wait] 固定延迟...");
+//                Thread.sleep(200 - end + start);
+//            } catch (InterruptedException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
         log("[wait] 等待的总时间：" + (System.currentTimeMillis() - start));
     }
 
