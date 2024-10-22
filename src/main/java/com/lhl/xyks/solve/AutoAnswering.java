@@ -5,7 +5,6 @@ import com.lhl.xyks.utils.ConfigParser;
 import com.lhl.xyks.utils.ImageTools;
 import com.lhl.xyks.utils.Mouse;
 import com.lhl.xyks.utils.Screen;
-import net.sourceforge.jeuclid.elements.presentation.token.Mo;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -27,7 +26,7 @@ public class AutoAnswering {
     static ArrayList<Question> questions = new ArrayList<>();
 
 
-    static boolean isDrawing = false; // 绘制状态
+    static Thread drawing = null; // 绘制线程
     static int currentNum = 0; // 当前题号
     static int index = 0; // 当前循环回合
     static boolean isFirst = true; // 绘制的答案来自当前题目吗
@@ -43,14 +42,14 @@ public class AutoAnswering {
         for (int i = 1; i <= num; i++) {
             questions.add(new Question(i));
         }
-        log(44, "答题列表准备完毕");
+        log("答题列表准备完毕");
 
         // 通过页眉蓝色区域有没有变白判断答题是否结束
         while (screen.isPointColorLike(ConfigParser.globalConfig.point6, ConfigParser.globalConfig.point6.color)) {
             // 如果重试次数超过了允许的失败重试次数，结束本轮答题
-            if (index > num + ConfigParser.globalConfig.mistakeTryNum) break;
             index++;
-            log(49, "-------------< 当前回合：" + index + " >-----------");
+            if (index > num + ConfigParser.globalConfig.mistakeTryNum) break;
+            log("-------------< 当前回合：" + index + " >-----------");
             // 题目指针
             if (currentNum >= num) {
                 currentNum = 0;
@@ -60,69 +59,27 @@ public class AutoAnswering {
             } else {
                 currentNum++;
             }
-            log(59, "开始答题，当前题号：" + currentNum);
-
-            if (!isFirst) {
-                // 只要不是第一次画答案，结果集里都有答案，直接画
-                log(63, "等待绘制（预识别），题号：" + currentNum);
-                doDraw(questions.get(-1 + currentNum));
-                waitDraw();
-            }
-
-            // 截题目图，如果是首题模式，截当前，否则截下一个。如果是最后一题，截一个保险
-            BufferedImage image;
-            if (isFirst || currentNum == num) {
-                image = screen.capture(ConfigParser.globalConfig.currentArea);
-                image = ImageTools.pngToBinary(image, 0.5f);
-            } else {
-                image = screen.capture(ConfigParser.globalConfig.nextArea);
-                image = ImageTools.pngToBinary(image, 0.85f);
-                image = ImageTools.resizePNG(image, 1.4, 1.4);
-            }
-
-            // 多线程识别吗
-            String result;
-            if (ConfigParser.globalConfig.allowOCRMultiThreading) {
-                result = questionOCR.multiOCR(image);
-            } else {
-                result = questionOCR.singleOCR(image);
-            }
-
-            // 如果是最后一题，主图识别结果和原来一样，稳了，这把直接结束，否则退回去再画一遍
-            if (currentNum == num) {
-                if (questions.get(-1 + currentNum).text.equals(result.split(":")[0])) {
-                    continue;
-                }
-                questions.get(-1 + currentNum).updateExpression(result);
-                currentNum--;
-                continue;
-            }
+            log("开始答题，当前题号：" + currentNum + "，isFirst=" + isFirst);
 
             if (isFirst) {
-                // 第一次的状态，就用现在的识别更新题目
-                questions.get(-1 + currentNum).updateExpression(result);
-                log(106, "First更新，上面识别" + result);
-
-            } else {
-                log(93, "下面识别：" + result);
-                log(94, "当前的题：" + questions.get(-1 + currentNum).exp);
-                // 如果识别的题目等于当前题目了（上次识别的下一题），说明上个题错了，重试
-                if (questions.get(-1 + currentNum).text.equals(result.split(":")[0])) {
-                    log(89, "在题号：" + currentNum + "发现两次next重复");
-                    currentNum--;
-                    isFirst = true; // 重新以首题模式作答
-                    continue;
-                } else {
-                    // 缓存下个题
-                    log(93, "成功缓存题号：" + (currentNum + 1));
-                    questions.get(-1 + currentNum + 1).updateExpression(result);
-                    log(106, "预更新");
-                }
-            }
-
-            if (isFirst) {
-                // 第一次画，提前把第二题答案准备了
+                isFirst = false;
+                // 如果是第一次，先识别再画答案
+                BufferedImage currentImage = screen.capture(ConfigParser.globalConfig.currentArea);
                 BufferedImage nextImage = screen.capture(ConfigParser.globalConfig.nextArea);
+
+                currentImage = ImageTools.pngToBinary(currentImage, 0.5f);
+                String currentResult;
+                if (ConfigParser.globalConfig.allowOCRMultiThreading) {
+                    currentResult = questionOCR.multiOCR(currentImage);
+                } else {
+                    currentResult = questionOCR.singleOCR(currentImage);
+                }
+                questions.get(-1 + currentNum).updateExpression(currentResult);
+
+                waitDraw();
+                log("[绘制] 当前识别，题号：" + currentNum);
+                doDraw(questions.get(-1 + currentNum));
+
                 nextImage = ImageTools.pngToBinary(nextImage, 0.85f);
                 nextImage = ImageTools.resizePNG(nextImage, 1.4, 1.4);
                 String nextResult;
@@ -132,56 +89,98 @@ public class AutoAnswering {
                     nextResult = questionOCR.singleOCR(nextImage);
                 }
                 questions.get(-1 + currentNum + 1).updateExpression(nextResult);
-                log(120, "下面识别（First模式）" + nextResult);
 
-                // 第一次画答案，得保证答案集里有值，所以得在最后
-                questions.get(-1 + currentNum).updateExpression(result);
-                log(100, "等待绘制（正常识别），题号：" + currentNum);
-                doDraw(questions.get(-1 + currentNum));
+                log("[当前识别模式] currentResult=" + currentResult + "，nextResult=" + nextResult);
+            } else {
+                // 画当前题
+                BufferedImage image = screen.capture(ConfigParser.globalConfig.nextArea);
                 waitDraw();
-                isFirst = false;
+                doDraw(questions.get(-1 + currentNum));
+                if (currentNum != num) {
+                    // 已经有当前答案了，只需要识别下一题
+                    image = ImageTools.pngToBinary(image, 0.85f);
+                    image = ImageTools.resizePNG(image, 1.4, 1.4);
+                    String result;
+                    if (ConfigParser.globalConfig.allowOCRMultiThreading) {
+                        result = questionOCR.multiOCR(image);
+                    } else {
+                        result = questionOCR.singleOCR(image);
+                    }
+                    log("[预先识别模式] result=" + result);
+                    // 如果识别到的下一题和理论上的当前题一致，说明上一题失败了，重来
+                    if (result.split(":")[0].equals(questions.get(-1 + currentNum).text)) {
+                        isFirst = true;
+                        currentNum--;
+                        continue;
+                    }
+                    // 把结果存下来
+                    questions.get(-1 + currentNum + 1).updateExpression(result);
+                } else {
+                    // 这是最后一题，等待画完，再画一次，结束
+                    BufferedImage endImage = screen.capture(ConfigParser.globalConfig.currentArea);
+                    endImage = ImageTools.pngToBinary(endImage, 0.5f);
+                    String endResult;
+                    if (ConfigParser.globalConfig.allowOCRMultiThreading) {
+                        endResult = questionOCR.multiOCR(endImage);
+                    } else {
+                        endResult = questionOCR.singleOCR(endImage);
+                    }
+                    questions.get(-1 + currentNum).updateExpression(endResult);
+                    waitDraw();
+                    doDraw(questions.get(-1 + currentNum));
+                }
             }
 
-            log(125, questions.toString());
+//            log(questions.toString());
         }
-        log(108, "结束：检测到退出了答题页面");
+        log("[外层大循环] 结束，退出本轮答题");
         waitDraw();
     }
 
     private static void doDraw(Question question) {
-        new Thread(() -> {
+        log("[绘制调用] 要绘制的问题：" + question.text + "，ans=" + question.ans);
+        drawing = new Thread(() -> {
             question.info = "作答中";
-            isDrawing = true;
             mouse.drawSymbols(question.ans, ConfigParser.globalConfig.point5);
-            isDrawing = false;
             question.info = "验证中";
-        }).start();
+        });
+        drawing.start();
     }
 
     private static void waitDraw() {
-        while (isDrawing) {
+        long start = System.currentTimeMillis();
+        log("[wait] 方法调用...");
+        if (drawing != null) {
+            log("[wait] 在绘制期间，等待线程");
             try {
-                Thread.sleep(10);
+                drawing.join();
             } catch (InterruptedException ignore) {
             }
+            drawing = null;
         }
         if (Mouse.checkHandwriting != null) {
-            log(128, "笔刷起点的颜色是" + screen.getColorAt(Mouse.checkHandwriting));
-            log(129, "要判断的颜色是" + ConfigParser.globalConfig.point5.color);
+            log("[wait] 笔刷起点的颜色是" + screen.getColorAt(Mouse.checkHandwriting));
+            log("[wait] 要判断的颜色是" + ConfigParser.globalConfig.point5.color);
             screen.waitUntilPointColorLike(Mouse.checkHandwriting, ConfigParser.globalConfig.point5.color, 1000);
+            log("[wait] 笔刷条件成立");
             Mouse.checkHandwriting = null;
         }
-        try {
-            Thread.sleep(400);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+        long end = System.currentTimeMillis();
+        if (end - start < 500) {
+            try {
+                log("[wait] 固定延迟...");
+                Thread.sleep(500 - end + start);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
+        log("[wait] 等待的总时间：" + (System.currentTimeMillis() - start));
     }
 
 
-    private static void log(int line, String message) {
+    private static void log(String message) {
         if (true) {
-            System.out.println("(AutoAnswering.java:" + line + ")\t" + message);
+            System.out.println(message);
         }
     }
 }

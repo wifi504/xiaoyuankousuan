@@ -27,6 +27,8 @@ public class ExpressionOptimizer {
      */
     public static String optimizeCompare20(String xyks, String paddle, String eng) {
         try {
+            xyks = xyks.replaceAll("-", "");
+            eng = eng.replaceAll("-", "");
             // 如果小猿口算识别的数字两个都是20以内，认为正确
             String[] split = xyks.split("\\?");
             String left = split[0];
@@ -36,12 +38,12 @@ public class ExpressionOptimizer {
             // 识别有错，利用 Paddle 的结果纠错
 
             // 如果 Paddle 的尾巴不是？，并且中间有问号，说明它按序识别了，返回
-            if (paddle.charAt(paddle.length() - 1) != '?' && paddle.contains("?")) return paddle + ":Paddle+小猿推测";
+            if (paddle.charAt(paddle.length() - 1) != '?' && paddle.contains("?")) return paddle + ":Paddle";
 
             // Paddle 的识别没按序，判断字符串长度，逐个还原答案
 
             // 两个 1 位数，问号直接插中间
-            if (paddle.length() == 3) {
+            if (paddle.length() == 3 && paddle.contains("?")) {
                 if (paddle.charAt(0) == xyks.charAt(0)) {
                     // 不换位
                     return paddle.charAt(0) + "?" + paddle.charAt(1) + ":Paddle+小猿推测";
@@ -51,7 +53,7 @@ public class ExpressionOptimizer {
             }
 
             // 1 位数 和 两位数
-            if (paddle.length() == 4) {
+            if (paddle.length() == 4 && paddle.contains("?")) {
                 // 如果第一位比2还大，肯定是 xx ? x
                 if (Integer.parseInt(paddle.charAt(0) + "") >= 2)
                     return paddle.substring(1) + paddle.charAt(0) + ":Paddle+小猿推测";
@@ -205,7 +207,8 @@ public class ExpressionOptimizer {
         // 否则输出 eng（原图） 替换+，等号右边只有?
         String res = eng.replaceAll("\\+", "/");
         int index = res.indexOf('=');
-        return res.substring(0, index) + "=?:ENG+小猿推测";
+        if (index == -1) index = res.length();
+        return res.substring(0, index).replaceAll("-", "") + "=?:ENG+小猿推测";
     }
 
     /**

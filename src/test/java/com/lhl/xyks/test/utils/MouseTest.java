@@ -77,9 +77,9 @@ public class MouseTest {
 
     @Test
     public void testDrawSymbol() throws InterruptedException {
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         Mouse mouse = Mouse.getMouse();
-        mouse.drawSymbol('>');
+        mouse.drawSymbols("365");
     }
 
     @Test

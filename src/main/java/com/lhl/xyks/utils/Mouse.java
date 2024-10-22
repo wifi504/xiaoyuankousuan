@@ -68,6 +68,17 @@ public class Mouse {
         } catch (IOException e) {
             throw new RuntimeException("无法初始化绘制符号映射，程序终止", e);
         }
+        // 初始化参数
+        try {
+            ConfigParser.loadGlobalConfig();
+            setDefaultMoveInterval(ConfigParser.globalConfig.defaultMoveInterval);
+            setDrawSymbolInterval(ConfigParser.globalConfig.drawSymbolInterval);
+            setStartDrawDuration(ConfigParser.globalConfig.startDrawDuration);
+            setEndDrawDuration(ConfigParser.globalConfig.endDrawDuration);
+            setDrawSymbolWidth(ConfigParser.globalConfig.drawSymbolWidth);
+        } catch (Exception e) {
+            throw new RuntimeException("无法初始化全局配置文件到鼠标控制器，程序终止", e);
+        }
     }
 
 
@@ -322,9 +333,10 @@ public class Mouse {
 
                 if (checkHandwriting == null) {
                     // 对外提供的检查点
-                    Point startPoint = getCurrentPoint();
-                    Point endPoint = point.overlay(p);
-                    checkHandwriting = new Point((startPoint.x + endPoint.x) / 2, (startPoint.y + endPoint.y) / 2);
+//                    Point startPoint = getCurrentPoint();
+//                    Point endPoint = point.overlay(p);
+//                    checkHandwriting = new Point((startPoint.x + endPoint.x) / 4, (startPoint.y + endPoint.y) / 4);
+                    checkHandwriting = getCurrentPoint();
                 }
 
                 smoothMoveTo(point.overlay(p));

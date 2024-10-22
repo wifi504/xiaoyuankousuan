@@ -2,6 +2,7 @@ package com.lhl.xyks.test.solve;
 
 import com.lhl.xyks.solve.AutoAnswering;
 import com.lhl.xyks.solve.Compare20OCR;
+import com.lhl.xyks.solve.DivisionOCR;
 import com.lhl.xyks.utils.ConfigParser;
 import org.junit.Test;
 
@@ -14,6 +15,6 @@ public class AutoAnsweringTest {
     @Test
     public void testExecute() {
         ConfigParser.loadGlobalConfig();
-        AutoAnswering.execute(new Compare20OCR(), 10);
+        AutoAnswering.execute(new DivisionOCR(), 10);
     }
 }

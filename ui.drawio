@@ -1,6 +1,6 @@
 <mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.17 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.17">
   <diagram name="第 1 页" id="VIQIuGn3ec8fBQR2KspF">
-    <mxGraphModel dx="819" dy="482" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="989" dy="582" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -265,11 +265,45 @@
         <mxCell id="X5T_Op0z2veCH_wAgRr7-223" value="-" style="text;strokeColor=none;fillColor=none;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" parent="X5T_Op0z2veCH_wAgRr7-213" vertex="1">
           <mxGeometry y="260" width="150" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="kofdt4RUw2W4vnHMZgNQ-1" value="自动答题整个流程" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" vertex="1" parent="1">
-          <mxGeometry x="1380" y="730" width="200" height="80" as="geometry" />
+        <mxCell id="kofdt4RUw2W4vnHMZgNQ-1" value="自动答题整个流程" style="rounded=0;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=10;spacingTop=10;" parent="1" vertex="1">
+          <mxGeometry x="1390" y="640" width="200" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="kofdt4RUw2W4vnHMZgNQ-2" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="1430" y="880" width="120" height="60" as="geometry" />
+        <mxCell id="kofdt4RUw2W4vnHMZgNQ-2" value="结束" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1370" y="1170" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="Rbf-RThG_MDUuRRuKYS0-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="Rbf-RThG_MDUuRRuKYS0-2" target="kofdt4RUw2W4vnHMZgNQ-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1440" y="960" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rbf-RThG_MDUuRRuKYS0-5" value="是" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Rbf-RThG_MDUuRRuKYS0-3">
+          <mxGeometry x="-0.2139" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rbf-RThG_MDUuRRuKYS0-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="Rbf-RThG_MDUuRRuKYS0-2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1725" y="1165.0000000000002" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rbf-RThG_MDUuRRuKYS0-8" value="否" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Rbf-RThG_MDUuRRuKYS0-7">
+          <mxGeometry x="-0.1316" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Rbf-RThG_MDUuRRuKYS0-2" value="页眉蓝色区域变了" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1510" y="920" width="430" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Rbf-RThG_MDUuRRuKYS0-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="Rbf-RThG_MDUuRRuKYS0-9" target="Rbf-RThG_MDUuRRuKYS0-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Rbf-RThG_MDUuRRuKYS0-9" value="根据题目数量准备答题列表" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1612.5" y="770" width="225" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Rbf-RThG_MDUuRRuKYS0-11" value="如果循环次数大于最大重试" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1890" y="1020" width="310" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
