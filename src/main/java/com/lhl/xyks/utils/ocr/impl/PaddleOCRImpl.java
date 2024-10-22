@@ -22,10 +22,6 @@ public class PaddleOCRImpl implements OCR {
 
     private static InferenceEngine engine = InferenceEngine.getInstance(Model.ONNX_PPOCR_V3);
 
-    static {
-
-    }
-
     public PaddleOCRImpl() {
     }
 

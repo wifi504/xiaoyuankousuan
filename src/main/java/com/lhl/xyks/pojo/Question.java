@@ -15,15 +15,22 @@ public class Question {
     // 答案格式化
     private static final DecimalFormat decimalFormat = new DecimalFormat("0.####");
 
-    int num; // 题号
-    String text = "-"; // 题目
-    String model = "-"; // 识别模型
-    String ans = "-"; // 答案
-    String info = "-"; // 状态
+    public int num; // 题号
+    public String text = "-"; // 题目
+    public String model = "-"; // 识别模型
+    public String ans = "-"; // 答案
+    public String info = "-"; // 状态
+    public String exp = ""; // 表达式原始值
 
     @Override
     public String toString() {
-        return "Question{" + "num=" + num + ", text='" + text + '\'' + ", model='" + model + '\'' + ", ans='" + ans + '\'' + ", info='" + info + '\'' + '}';
+        return "\nQuestion{" +
+                "num=" + num
+                + ", text='" + text + '\''
+                + ", model='" + model + '\''
+                + ", ans='" + ans + '\''
+                + ", info='" + info + '\''
+                + "}";
     }
 
     public Question(int num) {
@@ -36,6 +43,7 @@ public class Question {
      * @param exp 表达式
      */
     public void updateExpression(String exp) {
+        this.exp = exp;
         try {
             String[] split = exp.split(":");
             // 更新题目

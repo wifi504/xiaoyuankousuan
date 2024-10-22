@@ -84,6 +84,12 @@ public class ConfigParser {
             // point4=0,0,#000000
             String point4 = properties.getProperty("point4");
             globalConfig.point4 = deserializePoint(point4);
+            // 作答区域左侧边缘
+            String point5 = properties.getProperty("point5");
+            globalConfig.point5 = deserializePoint(point5);
+            // 答题期间页眉蓝色区域的任意点
+            String point6 = properties.getProperty("point6");
+            globalConfig.point6 = deserializePoint(point6);
             //  题目类型
             // questionsType=compare20
             globalConfig.questionsType = properties.getProperty("questionsType");
@@ -151,6 +157,12 @@ public class ConfigParser {
             // 开始匹配操作点（继续进入匹配按钮）
             String point4 = serializePoint(globalConfig.point4);
             properties.setProperty("point4", point4);
+            // 作答区域左侧边缘
+            String point5 = serializePoint(globalConfig.point5);
+            properties.setProperty("point5", point5);
+            // 答题期间页眉蓝色区域的任意点
+            String point6 = serializePoint(globalConfig.point6);
+            properties.setProperty("point6", point6);
             // 题目类型
             properties.setProperty("questionsType", globalConfig.questionsType);
             // 每轮完成题数
@@ -198,6 +210,10 @@ public class ConfigParser {
                 point3=0,0,#000000
                 # 开始匹配操作点（继续进入匹配按钮）
                 point4=0,0,#000000
+                # 作答区域左侧边缘
+                point5=0,0,#000000
+                # 答题期间页眉蓝色区域的任意点
+                point6=0,0,#000000
                 # 题目类型
                 questionsType=compare20
                 # 每轮完成题数
@@ -286,6 +302,8 @@ public class ConfigParser {
         public Point point2;
         public Point point3;
         public Point point4;
+        public Point point5;
+        public Point point6;
         public String questionsType;
         public int questionsNum;
         public int mistakeTryNum;
@@ -299,7 +317,26 @@ public class ConfigParser {
 
         @Override
         public String toString() {
-            return "Config{" + "currentArea=" + currentArea + ", nextArea=" + nextArea + ", point1=" + point1 + ", point2=" + point2 + ", point3=" + point3 + ", point4=" + point4 + ", questionsType='" + questionsType + '\'' + ", questionsNum=" + questionsNum + ", mistakeTryNum=" + mistakeTryNum + ", terminateKeyCombination='" + terminateKeyCombination + '\'' + ", defaultMoveInterval=" + defaultMoveInterval + ", drawSymbolInterval=" + drawSymbolInterval + ", startDrawDuration=" + startDrawDuration + ", endDrawDuration=" + endDrawDuration + ", drawSymbolWidth=" + drawSymbolWidth + ", allowOCRMultiThreading=" + allowOCRMultiThreading + '}';
+            return "Config{" +
+                    "currentArea=" + currentArea +
+                    ", nextArea=" + nextArea +
+                    ", point1=" + point1 +
+                    ", point2=" + point2 +
+                    ", point3=" + point3 +
+                    ", point4=" + point4 +
+                    ", point5=" + point5 +
+                    ", point6=" + point6 +
+                    ", questionsType='" + questionsType + '\'' +
+                    ", questionsNum=" + questionsNum +
+                    ", mistakeTryNum=" + mistakeTryNum +
+                    ", terminateKeyCombination='" + terminateKeyCombination + '\'' +
+                    ", defaultMoveInterval=" + defaultMoveInterval +
+                    ", drawSymbolInterval=" + drawSymbolInterval +
+                    ", startDrawDuration=" + startDrawDuration +
+                    ", endDrawDuration=" + endDrawDuration +
+                    ", drawSymbolWidth=" + drawSymbolWidth +
+                    ", allowOCRMultiThreading=" + allowOCRMultiThreading +
+                    '}';
         }
     }
 }
