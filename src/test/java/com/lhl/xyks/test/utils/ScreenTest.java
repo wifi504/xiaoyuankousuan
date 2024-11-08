@@ -15,6 +15,16 @@ import java.io.File;
  * Create Time: 2024/10/14_14:40
  */
 public class ScreenTest {
+
+    @Test
+    public void testLineColorContains() throws InterruptedException {
+        Point p1 = new Point(534, 570);
+        Point p2 = new Point(1374, 570);
+        Screen screen = Screen.getScreen();
+        Thread.sleep(1000);
+        System.out.println(screen.isLineColorContains(p1, p2, Color.hexToColor("#000000")));
+    }
+
     @Test
     public void testCapture() {
         // 测试截图功能
@@ -47,7 +57,7 @@ public class ScreenTest {
         // 当鼠标移动到红色，就退出
         Color color = Color.hexToColor("#fb0200");
         Mouse mouse = Mouse.getMouse();
-        while (!screen.isPointColorLike(mouse.getCurrentPoint(), color)){
+        while (!screen.isPointColorLike(mouse.getCurrentPoint(), color)) {
             Thread.sleep(10);
         }
         System.out.println("鼠标移动到红色了...");

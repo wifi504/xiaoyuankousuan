@@ -55,6 +55,16 @@ public class ConfigParserTest {
         System.out.println("选择区域：下一题目识别区域");
         GlobalKeyListener.waitKeyTrigger(Key.CTRL);
         ConfigParser.globalConfig.nextArea = selector.getSelectorArea();
+
+        System.out.println("选择点：答题结束判定点（中间领奖励的弹窗按钮黄色）");
+        GlobalKeyListener.waitKeyTrigger(Key.CTRL);
+        ConfigParser.globalConfig.point2 = selector.getSelectorPoint();
+        System.out.println("选择点：继续答题操作点（右下角按钮）");
+        GlobalKeyListener.waitKeyTrigger(Key.CTRL);
+        ConfigParser.globalConfig.point3 = selector.getSelectorPoint();
+        System.out.println("选择点：开始匹配操作点（继续进入匹配按钮）");
+        GlobalKeyListener.waitKeyTrigger(Key.CTRL);
+        ConfigParser.globalConfig.point4 = selector.getSelectorPoint();
         ConfigParser.saveGlobalConfig();
         GlobalKeyListener.shutdown();
     }

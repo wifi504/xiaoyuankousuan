@@ -68,9 +68,11 @@
   ]},
   {"char": "9", "points": [
     [62, 32, false],
-    [22, 69, true],
-    [64, 87, true],
-    [55, 180, true]
+    [31, 40, true],
+    [18, 67, true],
+    [32, 77, true],
+    [68, 70, true],
+    [58, 178, true]
   ]},
   {"char": "0", "points": [
     [38, 52, false],

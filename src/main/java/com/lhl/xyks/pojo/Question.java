@@ -53,7 +53,7 @@ public class Question {
             // 判断题型，更新结果
             if (text.substring(text.length() - 2).contains("=")) {
                 // 算式题
-                double evaluate = new ExpressionBuilder(text.replaceFirst("=\\??$", "")).build().evaluate();
+                double evaluate = new ExpressionBuilder(text.substring(0, text.indexOf('='))).build().evaluate();
                 ans = decimalFormat.format(evaluate);
             } else {
                 // 比大小题

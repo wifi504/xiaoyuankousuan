@@ -72,6 +72,16 @@ public class Color extends java.awt.Color {
     }
 
     /**
+     * 根据默认宽容度(10)判断颜色是否相似
+     *
+     * @param rgb 目标颜色RGB
+     * @return boolean
+     */
+    public boolean like(int rgb) {
+        return like(rgb, 10);
+    }
+
+    /**
      * 根据宽容度（tolerance）判断颜色是否相似
      *
      * @param color     目标颜色
@@ -82,6 +92,23 @@ public class Color extends java.awt.Color {
         int redDiff = Math.abs(getRed() - color.getRed());
         int greenDiff = Math.abs(getGreen() - color.getGreen());
         int blueDiff = Math.abs(getBlue() - color.getBlue());
+        return redDiff <= tolerance && greenDiff <= tolerance && blueDiff <= tolerance;
+    }
+
+    /**
+     * 根据宽容度（tolerance）判断颜色是否相似
+     *
+     * @param rgb       目标颜色RGB
+     * @param tolerance 宽容度
+     * @return boolean
+     */
+    public boolean like(int rgb, int tolerance) {
+        int red = (rgb >> 16) & 0xFF;
+        int green = (rgb >> 8) & 0xFF;
+        int blue = rgb & 0xFF;
+        int redDiff = Math.abs(getRed() - red);
+        int greenDiff = Math.abs(getGreen() - green);
+        int blueDiff = Math.abs(getBlue() - blue);
         return redDiff <= tolerance && greenDiff <= tolerance && blueDiff <= tolerance;
     }
 

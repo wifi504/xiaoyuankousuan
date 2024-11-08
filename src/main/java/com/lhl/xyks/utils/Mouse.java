@@ -49,9 +49,6 @@ public class Mouse {
     // 符号映射文件中的坐标是相对坐标，在一个宽100高200的范围内，依次存放每个笔画起止点
     private static HashMap<Character, ArrayList<Point>> symbolMap = null;
 
-    // 对外提供一个笔迹检查点，位置是第一次开始绘制时，两个路径点的中点
-    public static Point checkHandwriting = null;
-
     /**
      * 构造方法私有化
      */
@@ -330,15 +327,6 @@ public class Mouse {
                     } catch (InterruptedException ignore) {
                     }
                 }
-
-                if (checkHandwriting == null) {
-                    // 对外提供的检查点
-//                    Point startPoint = getCurrentPoint();
-//                    Point endPoint = point.overlay(p);
-//                    checkHandwriting = new Point((startPoint.x + endPoint.x) / 4, (startPoint.y + endPoint.y) / 4);
-                    checkHandwriting = getCurrentPoint();
-                }
-
                 smoothMoveTo(point.overlay(p));
             } else {
                 // 移动过去

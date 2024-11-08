@@ -127,6 +127,51 @@ public class Screen {
         return getColorAt(point).like(color);
     }
 
+    /**
+     * 判读指定线段上是否存在某个颜色（近似匹配）
+     * 必须是水平或竖直
+     *
+     * @param p1    线段起点
+     * @param p2    线段终点
+     * @param color 颜色
+     * @return boolean
+     */
+    public boolean isLineColorContains(Point p1, Point p2, Color color) {
+        // 判断点能组成什么线？（水平，竖直）
+        if (p1.x != p2.x && p1.y != p2.y) {
+            // 啥也不是
+            throw new RuntimeException("错误的点参数（只允许水平线和竖直线）");
+        }
+        boolean isHorizontal = p1.y == p2.y;
+        // 获取这条线对应的截图，得到 BufferedImage
+        int minX = Math.min(p1.x, p2.x);
+        int minY = Math.min(p1.y, p2.y);
+        int maxX = Math.max(p1.x, p2.x);
+        int maxY = Math.max(p1.y, p2.y);
+        BufferedImage line;
+        if (isHorizontal) {
+            // 水平线，截图高为1
+            line = capture(new Area(minX, minY, maxX - minX, 1));
+        } else {
+            // 竖直线，宽为1
+            line = capture(new Area(minX, minY, 1, maxY - minY));
+        }
+        // 遍历图中的像素点，逐一匹配颜色，如果存在立即返回真
+        if (isHorizontal) {
+            // 横向遍历
+            for (int i = 0; i < line.getWidth(); i++) {
+                int rgb = line.getRGB(i, 0);
+                if (color.like(rgb)) return true;
+            }
+        } else {
+            // 纵向遍历
+            for (int i = 0; i < line.getHeight(); i++) {
+                int rgb = line.getRGB(0, i);
+                if (color.like(rgb)) return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * 永久阻塞当前线程，直到指定点颜色与该颜色相似
@@ -178,6 +223,69 @@ public class Screen {
     public void waitWhilePointColorLike(Point point, Color color, long timeout) {
         long start = System.currentTimeMillis();
         while (isPointColorLike(point, color)) {
+            if (System.currentTimeMillis() - start > timeout) return;
+            try {
+                Thread.sleep(defaultUpdateInterval);
+            } catch (InterruptedException ignore) {
+            }
+        }
+    }
+
+    /**
+     * 永久阻塞当前线程，直到指定颜色在线段内近似存在
+     *
+     * @param p1    线段起点
+     * @param p2    线段终点
+     * @param color 颜色
+     */
+    public void waitUntilLineColorContains(Point p1, Point p2, Color color) {
+        waitUntilLineColorContains(p1, p2, color, Long.MAX_VALUE);
+    }
+
+    /**
+     * 超时阻塞当前线程，直到指定颜色在线段内近似存在
+     * 如果达到超时时间颜色也没有相似，取消阻塞
+     *
+     * @param p1      线段起点
+     * @param p2      线段终点
+     * @param color   颜色
+     * @param timeout 超时等待时间
+     */
+    public void waitUntilLineColorContains(Point p1, Point p2, Color color, long timeout) {
+        long start = System.currentTimeMillis();
+        while (!isLineColorContains(p1, p2, color)) {
+            if (System.currentTimeMillis() - start > timeout) return;
+            try {
+                Thread.sleep(defaultUpdateInterval);
+            } catch (InterruptedException ignore) {
+            }
+        }
+    }
+
+    /**
+     * 永久阻塞当前线程，直到指定颜色在线段内不再存在
+     *
+     * @param p1    线段起点
+     * @param p2    线段终点
+     * @param color 颜色
+     */
+    public void waitWhileLineColorContains(Point p1, Point p2, Color color) {
+        waitWhileLineColorContains(p1, p2, color, Long.MAX_VALUE);
+    }
+
+
+    /**
+     * 超时阻塞当前线程，直到指定颜色在线段内不再存在
+     * 如果达到超时时间颜色也仍然存在，取消阻塞
+     *
+     * @param p1      线段起点
+     * @param p2      线段终点
+     * @param color   颜色
+     * @param timeout 超时等待时间
+     */
+    public void waitWhileLineColorContains(Point p1, Point p2, Color color, long timeout) {
+        long start = System.currentTimeMillis();
+        while (isLineColorContains(p1, p2, color)) {
             if (System.currentTimeMillis() - start > timeout) return;
             try {
                 Thread.sleep(defaultUpdateInterval);

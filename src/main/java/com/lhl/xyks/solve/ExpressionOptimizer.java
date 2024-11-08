@@ -172,12 +172,32 @@ public class ExpressionOptimizer {
      */
     public static String optimizeDecimalMultiplication(String xyks, String paddle) {
 
+        // 如果数字以0开头，又没小数点，则添加小数点
+        xyks = addPointAfter0(xyks);
+        paddle = addPointAfter0(paddle);
+
         // 判断有没有两个连续符号出现
         Pattern pattern = Pattern.compile("[+\\-*/%^=]{2,}");
         boolean isValid = !pattern.matcher(xyks).find();
 
         if (xyks.length() == paddle.length() && isValid) return xyks + ":小猿模型";
+        if (paddle.charAt(0) == '?') {
+            paddle = paddle.substring(1);
+        }
         return paddle + ":Paddle";
+    }
+
+    private static String addPointAfter0(String s) {
+        if (!s.isEmpty()) {
+            if (s.charAt(0) == '0' && s.charAt(1) != '.') {
+                s = "0." + s.substring(1);
+            }
+            int index = s.indexOf('*');
+            if (s.charAt(index + 1) == '0' && s.charAt(index + 2) != '.') {
+                s = s.substring(0, index + 2) + '.' + s.substring(index + 2);
+            }
+        }
+        return s;
     }
 
 
@@ -232,7 +252,12 @@ public class ExpressionOptimizer {
     public static String optimizePiSquare(String paddle) {
         // 这个 Paddle 也好的离谱，就是*有概率被识别成x
         String res = paddle.replaceAll("x", "*");
-        return res + ":Paddle";
+        // 等号右边不能有东西
+        int index = res.lastIndexOf("=");
+        if (index != -1) {
+            res = res.substring(0, index);
+        }
+        return res + "=?:Paddle";
     }
 
     /**
